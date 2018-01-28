@@ -1,0 +1,863 @@
+﻿/* ******************************************************************************************************************** */
+/* ******************************************************************************************************************** */
+
+/* ************************************************************************************************ */
+/* ************************************************************************************************ */
+/* ************************************************************************************************ */
+/* ********************************Debut de EXPRESSIONS RÉGULIERE ********************************** */
+/* ************************************************************************************************ */
+/* ************************************************************************************************ */
+/* ************************************************************************************************ */
+
+
+/* ******************************************************************************************************************** */
+/* ******************************************************************************************************************** */
+
+
+EXPRESSION RÉGULIÈRE : 
+
+Appelé au expression rationnelle ou expression régulière (regular expression en anglais) 
+C'est une chaîne de caractères qui décrit les caractères possibles selon une syntaxe précise. 
+Par exemple : cela peut permettre d'obliger l'utilisateur à remplir un champs qu'avec des chiffres ou lettres.
+
+
+
+
+
+
+
+
+
+
+
+Caractères spéciaux utilisables pour les expressions rationnelles :
+	
+	
+	
+	
+	
+	
+	
+	
+	
+Résumé 
+-------------------------- 
+
+Échappement               :   \
+
+Parenthèses et crochets   :   (), (?:), (?=), []
+
+Quantificateurs           :   *, +, ?, {n}, {n,}, {n,m}
+
+Ancres et séquences       :   ^, $, \ToutMétacaractère
+
+Alternative	              :   |
+
+
+
+
+
+
+
+
+
+
+Caractere	\   :   
+	Un backslash précédant un caractère marque le caractère suivant comme un caractère spécial, un littéral, une référence arrière ou une évasion octal.
+	
+	Cela indique que le caractère qui suit doit être interprété littéralement (et non pas comme un caractère spécial). 
+
+	Lorsque ce caractère d'échappement est suivi d'un caractère non identifié comme caractère d'échappement, correspond au caractère lui-même
+
+	Ainsi, le motif /a*/ utilise le caractère spécial '*' pour correspondre à 0 ou plusieurs 'a'. Le motif /a\*/, 
+	au contraire, rend '*' non-spécial pour correspondre aux chaînes de caractères qui comportent la lettre a et une astérisque, comme 'a*'.
+
+	Il ne faut pas oublier d'échapper le caractère '\' car lui-même est un caractère d'échappement dans les chaînes de caractères. 
+	
+	Pour trouver des correspondances à l'un de ces caractères spéciaux, vous devez avant tout le faire précéder d'un caractère d'échappement, 
+	en l'occurrence une barre oblique inverse (\). Par exemple, pour rechercher le caractère "+" littéral, vous pouvez utiliser l'expression "\+". 
+	
+	\\   :   Caractère \
+	\/   :   Caractère /
+	\^   :   Caractère ^
+	\$   :   Caractère $
+	\*   :   Caractère *
+	\+   :   Caractère +
+	\?   :   Caractère ?
+	\.   :   Caractère .
+	\|   :   Caractère |
+	\{   :   Caractère {
+	\{   :   Caractère }
+	\(   :   Caractère (
+	\)   :   Caractère )
+	\[   :   Caractère [
+	\]   :   Caractère ]
+	
+
+	
+
+
+
+Caractere	/   :   
+	Une barre oblique ou slash précédant un caractère non spécial indique que le caractère qui suit est spécial.
+	C'est à dire que le caractère suivant ne doit pas être interprété directement. 
+	
+	Il peut marquer le début ou la fin d'un modèle d'expression régulière littérale dans JavaScript ou JScript... 
+	
+	Après le deuxième caractère "/", les indicateurs à un seul caractère peuvent être ajoutés pour spécifier le comportement de recherche. 
+
+
+
+Caractere	^  :   
+	Correspond au début la séquence.
+	C'est à dire le début d’une chaîne de caractères.
+	
+	Ainsi, /^B/ ne correspond pas au 'B' de "un B", 
+	mais correspond au 'B' de "Berceau".
+
+
+
+Caractere	$   :   
+	Correspond à la fin de la séquence.
+	C'est à dire la fin d’une chaîne de caractères.
+	
+	Ainsi, /t$/ ne correspond pas au 't' de "printemps", mais correspond au 't' de "aliment".
+
+
+
+Caractere	*   :   
+	Correspond au caractère précédent qui est répété 0 ou plusieurs fois. 
+	C'est équivalent à {0,}.
+	
+	Ainsi, /bo*/ correspond à 'bo' ou 'boo' ou 'booo' dans "Un booléen" 
+	et à 'b' dans "Un bateau bleu", mais ne correspond à rien dans "Ce matin".
+
+
+
+Caractere	+   :   
+	Correspond au caractère précédent qui est répété une ou plusieurs fois. 
+	C'est équivalent à {1,}.
+	
+	Ainsi, /a+/ correspond au 'a' dans 'a1' ou 'abc' ou "maison" et à tous les 'a' dans "maaaaaaison".
+	Ainsi, /a+/ ne correspond pas 'a' dans 'a' ou 'la' ou "Ella".
+
+
+
+Caractere	?   :   
+	Correspond au caractère précédent qui est présent une fois ou pas du tout. 
+	C'est équivalent à {0,1}.
+	
+	Ainsi, /e?/ correspond au 'e' dans 'e' ou 'e1' ou "tel" .
+	Ainsi, /e?/ ne correspond pas 'e' dans 'télé' ou 'l' ou "Ella".
+	
+	Ainsi, /e?le?/ correspond au l, el, le et ele 
+	Donc au 'el' dans "gel" et au 'le' dans "angle" mais aussi au 'l' dans "Oslo".
+	S'il est utilisé immédiatement après l'un des quantificateurs : *, +, ?, ou {}, il rend le quantificateur moins « gourmand ».
+	Le comportement par défaut, « gourmand », permettant de faire correspondre le plus de caractères possible.
+	Par exemple /\d+/ utilisée avec "123abc" fait correspondre "123". Utiliser /\d+?/ à la même chaîne de caractères fait correspondre "1". 
+	Autre exemple, dans la chaîne "oooo", 'o+? correspond à un seul "o", tandis que 'o+' correspond à tous les 'o de.
+
+
+
+Caractere	.   :   
+	(Le point) correspond à n'importe quel caractère unique et visibles ou blancs sauf un caractère de saut de ligne \n
+	Pour correspondre à ne importe quel caractère y compris le \n , utiliser un modèle comme [\s \S] .
+	
+	Ainsi, /e./ correspond au 'e' dans 'e1' ou "tel" .
+	Ainsi, /e./ ne correspond pas 'e' dans 'télé' ou "le".
+	Ainsi, /.n/ correspond à  'un' et 'en' dans "Un baobab nain en cours de  croissance" mais pas à 'nain'.
+
+
+Caractere	( x )   :   
+Caractere	( TexteOuCaractere1 )   : 
+
+	exemple : /a/
+	exemple : /le/
+	exemple : /elle/
+	Groupe gardé en mémoire (normalement 9 maximum)
+	C'est un délimiteurs de groupe (avec capture).
+	Correspond à une evaluation de TexteOuCaractere1 et garde la correspondance en mémoire. 
+	Le regroupement au moyen des parenthèses est dit mémorisant. 
+	Cela signifie que l'expression matchée par ce regroupement est gardée en mémoire par le moteur d'expressions régulières : \1 \2 \3 \4 \5 \6 \7 \8 \9
+	et qu'elle pourra servir à nouveau dans la suite de l'expression. 
+	Elle capture la sous-expression mise en correspondance et lui assigne un nombre ordinal de base un : (toto) (truc) \1 \2
+	
+	L'exemple typique consiste à se demander si une variable contient le même mot répété deux fois. 
+	L'expression m/\w+.*\w+/ ne saurait nous satisfaire ; en effet elle matche toute valeur comportant deux mots pouvant être différents. 
+	La solution est d'utiliser les notations \1, \2 etc qui font référence aux sous-chaînes matchées par (respectivement) 
+	la première, la deuxième, etc. expression entre parenthèses (il n'est pas possible d'accéder à une expression au-delà de \9, 
+	mais cela nous donne déjà une expression très lourde à gérer).
+
+	Par exemple, la réponse à notre problème de deux occurrences d'un même mot est la suivante : m/(\w+).*\1/ 
+	Le \w+ matchera un mot, les parenthèses mémoriseront la valeur alors trouvée, 
+	le .* permet comme avant qu'il y ait un nombre indéfini de caractères quelconques entre les deux occurrences, 
+	enfin \1 fait référence à la valeur trouvée par le \w+ précédent. 
+	
+	Ainsi, les '(toto)' et '(truc)', dans le motif /(toto) (truc) \1 \2/ correspondent 
+	et gardent en mémoire les deux premiers mots de la chaîne de caractère "toto truc toto truc". 
+	Les \1 et \2 du motif correspondent aux deux derniers mots de la chaîne.
+	
+	Vous allez me dire : mais cela signifie que dès que l'on fait un regroupement, 
+	le moteur d'expressions régulières mémorise la valeur et si l'on n'utilise pas certains regroupements 
+	et que d'autres sont au-delà de 9, on ne peut donc pas s'en servir ... Je vais alors vous dire : 
+	il existe un regroupement non-mémorisant ! La notation (?:motifs) permet de regrouper les motifs 
+	(pour leur appliquer le même quantificateur par exemple) sans pour autant qu'une mémorisation n'ait lieu.
+
+	Par exemple m/(.*) (?:et )+(.*) avec \1 \2/ matchera par exemple les valeurs suivantes : 
+	"Paul et Julie avec Paul Julie" et "lala et et lili avec lala lili" 
+
+
+
+Caractere	(?:x)   :   
+Caractere	(?:TexteOuCaractere1)   :  
+	Groupe non gardé en mémoire
+	Correspond à une evaluation de TexteOuCaractere1 mais ne garde pas la correspondance en mémoire. 
+	Les parenthèses ne capturent pas l'expression et permettent d'utiliser des sous-expressions d'une expression régulière pour travailler plus finement. 
+	Cela n'enregistre pas la correspondance (TexteOuCaractere1); c'est-à-dire que la correspondance n'est pas stockée pour une utilisation ultérieure éventuelle. 
+Elle est utile lorsque vous souhaitez combiner des parties d'un modèle avec le caractère « ou » (|). 
+	
+	Ainsi, l'expression /?:zoo{1,2}/ 
+	sans parenthèes non-capturantes les caractères {1,2} ne s'appliqueraient qu'au dernier 'o' de 'zoo'. 
+	
+	l'expression /(?:zoo){1,2}/ 
+	Avec les parenthèses capturantes, {1,2} s'applique au mot entier 'zoo'.
+
+
+
+Caractere	x(?=y)   :   
+Caractere	x(?=y)   :   
+Caractere	TexteOuCaractere1(?=TexteOuCaractere2)   :  
+	Chaîne x suivi de y
+	Correspond à une chaîne x qui est suivie par une chaîne y
+	Correspond à une evaluation de TexteOuCaractere1 seulement s'il est suivi de TexteOuCaractere2. On appelle cela un test de succession (lookahead).
+
+	Ainsi, /Jack(?=Sparrow)/ correspond à 'Jack' seulement s'il est suivi de 'Sparrow'. /Jack(?=Sparrow|Bauer)/ correspond à 'Jack' seulement s'il est suivi 
+	de 'Sparrow' ou de 'Bauer'. Cependant, ni 'Sparrow' ni 'Bauer' ne feront partie de la correspondance.
+
+
+Caractere	x(?!y)   : 
+Caractere	TexteOuCaractere1(?!TexteOuCaractere1)   : 
+	Chaîne x non suivi de y
+	Correspond à une chaîne x qui n'est pas suivi d'une chaîne y.
+	Correspond à TexteOuCaractere1 seulement si TexteOuCaractere1 n'est pas suivi de TexteOuCaractere2.
+
+	Ainsi, /\d+(?!\.)/ correspond à un nombre qui n'est pas suivi par un point, cette expression utilisée avec la chaîne 3.141 correspondra pour '141' mais pas pour '3.141'.
+
+
+Caractere	x|y   :   
+Caractere	TexteOuCaractere1|TexteOuCaractere2   :  
+	Chaîne x ou y
+	Correspond à TexteOuCaractere1 ou TexteOuCaractere12.
+
+	Ainsi, /vert|rouge/ correspond à 'vert' dans "feu vert" et à 'rouge' dans "feu rouge".
+
+
+
+Caractere	TexteOuCaractere1{N}   :   
+	N doit obligatoirement être un entier positif.
+	Correspond pour exactement N occurences du TexteOuCaractere1 précédent. 
+
+	Ainsi, /a{2}/ ne correspond pas au 'a' de "Mozilla" mais correspond à tous les 'a' de "Mozilaa" et aux deux premiers 'a' de "Mozillaaa".
+
+
+
+Caractere	TexteOuCaractere1{N,M}   :   
+	N et M sont des entiers positifs.
+	Chaine quantifié N fois min et M fois max.
+	Cela correspond à au moins N occurences du TexteOuCaractere1 précédent et à au plus M occurrences. 
+	Lorsque M n'est pas mentionné TexteOuCaractere1{N,}, la valeur par défaut correspondante sera l'infini.
+
+	Ainsi, /a{1,3}/ ne correspond à rien dans "Mozill", au 'a' de "Mozilla", au deux premiers 'a' de "Mozillaa" et au trois premiers 'a' de "Mozillaaaaa". 
+	Pour ce dernier exemple, on doit noter que le correspondance ne se fait que sur "aaa" bien qu'il y ait plus de 'a' dans la chaîne de caractères.
+
+
+Caractere	[xyz]   :   
+Caractere	[ groupe_caractères ]    :   
+Caractere	[Caractere1Caractere2Caractere3]   : 
+	Un ensemble de chaine possible (une parmis l'ensemble)
+	Un ensemble de caractère ou un jeu de caractères. 
+	Ce type de motif correspond pour n'importe quel caractètre présent entre les crochets, y compris les séquences d'échappement. 
+	Les caractères spéciaux comme le point (.) et l'astérisque ne sont pas considérés comme spéciaux au sein d'un ensemble et n'ont donc pas besoin d'être échappés. 
+	Il est possible de donner un ensemble sur un intervalle de caractères en utilisant un tiret (-), comme le montre l'exemple qui suit.
+
+	Le motif [a-d],  aura les mêmes correspondances que [abcd], correspondant au 'b' de "bulle" et au 'c' de "ciel". Les motifis /[a-z.]+/ et /[\w.]+/ 
+	correspondront pour la chaîne entirère : "Adre.ss.e".
+	
+	[0123] un caractère parmi 0123 ou [0-3]
+	[2468] un caractère parmi 2468
+	[1357] un caractère parmi 1357
+	
+	[abc] un caractère parmi abc ou [a-c]
+	[aeiou] un caractère parmi aeiou
+	[aceho] un caractère parmi aceho
+
+	
+
+Caractere	[A-Z]   : 
+Caractere	[ premier_car - dernier_car ]    : 
+	Une serie de chaine possible (une parmis la serie)
+	correspond à une gamme de caractères ou n’importe quelle lettre minuscule (non-accentuée)
+	[0-3]    est équivalant de 0123
+	[a-c]    est équivalant de abc
+	[0-5]    est équivalant de 012345
+	[0-9]    est équivalant de 0123456789
+	[0-47]   est équivalant de 01234 et/ou 7
+	[0-4D]   est équivalant de 01234 et/ou D
+	[a-m]    est équivalant de abcdefghijklm
+	[a-z]    est équivalant de abcdefghijklmnopqrstuvwxyz
+    [A-Z]    est équivalant de ABCDEFGHIJKLMNOPQRSTUVWXYZ
+	[a-zA-Z] est équivalant de abcdefghijklmnopqrstuvwxyz et/ou ABCDEFGHIJKLMNOPQRSTUVWXYZ
+	[0-9a-zA-Z] est équivalant de 0123456789 et/ou abcdefghijklmnopqrstuvwxyz et/ou ABCDEFGHIJKLMNOPQRSTUVWXYZ
+	
+
+	
+
+Caractere	[^xyz]   : 
+Caractere	[^ groupe_caractères_interdis ]    : 
+Caractere	[^Caractere1Caractere2Caractere3]   :  
+	Exclusion de chaine possible (une parmis la serie)
+	Exclusion d'un ensemble de caractères. Cela correspond à tout ce qui n'est pas compris entre crochets. 
+	Il est possible de fournir un intervalle de caractères en utilisant un tiret (-). 
+	Les autres règles qui s'appliquent pour l'ensemble de caractères (ci-avant) s'appliquent également ici.
+	
+	Par exemple, 
+	[^0123] un caractère diférent de 0123
+	[^aeiou] un caractère diférent de aeiou
+	
+
+	
+
+Caractere	[^a-z]   : 
+Caractere	[^ premier_car - dernier_car ]    : 
+	Exclusion d'une série de chaine possible (une parmis la serie)
+	[^0-3]    est équivalant de [^0123]   donc exclut : 0123
+	[^a-c]    est équivalant de [^abc]    donc exclut : abc
+	[^0-5]    est équivalant de [^0-5]    donc exclut : 012345
+	[^0-9]    est équivalant de [^0-9]    donc exclut : 0123456789
+	[^0-47]   est équivalant de [^0-47]   donc exclut : 01234 ou 7
+	[^0-4D]   est équivalant de [^0-4D]   donc exclut : 01234 ou D
+	[^a-m]    est équivalant de [^a-m]    donc exclut : abcdefghijklm
+	[^a-z]    est équivalant de [^a-z]    donc exclut : abcdefghijklmnopqrstuvwxyz
+	[^A-Z]    est équivalant de [^A-Z]    donc exclut : ABCDEFGHIJKLMNOPQRSTUVWXYZ
+	[^a-zA-Z] est équivalant de [^a-zA-Z] donc exclut : abcdefghijklmnopqrstuvwxyz ou ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+	
+
+Caractere	[\b]   :   
+	Correspond pour un retour arrière (U+0008). 
+	À ne pas confondre avec \b sans les crochets [].
+
+
+
+Caractere	\b   :   
+	Correspond à une limite de mot. 
+	Une limite de mot correspond à la position où un caractère d'un mot n'est pas suivi ou précédé d'un autre caractère de mot. 
+	Il faut savoir que la limite correspondante n'est pas incluse dans le résultat. Autrement dit, la longueur d'une telle correspondance est nulle. 
+	c'est à dire l'inverse de \B et à ne pas confondre avec [\b].
+
+	Exemples :
+	/\bm/ correspond au 'm' dans "mignon" ;
+	/no\b/ ne correspond pas au  'no' de "mignon" car 'no' est suivi de 'n' qui est un caractère de limite de mot;
+	/non\b/ correspond au 'non' de "mignon" car 'non' représente la fin de la chaîne de caractère et n'est donc pas suivi par un caractère de mot.
+	/\w\b\w/ ne correspondra jamais à quoi que ce soit car un caractère de mot ne peut pas être suivi à la fois 
+	par un caractère de mot et un caractère n'étant pas un caractère de mot.
+
+	Note : Le moteur d'expressions rationnelles JavaScript définit un ensemble de caractères spécifiques qui doivent être considérés comme des caractères de mot. 
+	Tout caractère qui n'est pas dans cet ensemble est considéré comme une limite de mot. 
+	Cet ensemble de caractères est relativement limité car constitué uniquement des caractères de l'alphabet romain en minuscules 
+	et en majuscules, des chiffres décimaux et du tiret-bas (underscore). 
+	Les autres caractères, comme les caractères accentués (é ou ü par exemple), sont donc considérés comme des limites de mots.
+
+
+
+Caractere	\B   :   
+	Correspond à une « non-limite » de mot. 
+	Cela correspond pour une position où le caractère précédent et le caractère suivant sont du même type : 
+	les deux étant des caractères mot ou les deux n'étant pas des caractères de mot. 
+	Le début et la fin d'une chaîne de caractères sont considérés comme n'étant pas des caractères de mots.
+	c'est à dire l'inverse de \b.
+
+	Ainsi, /\B../ correspond au 'oo' de "football" (et /e\B./ correspond au 'me' dans "une mer "
+
+
+
+Caractere	\d   :   
+	Correspond à un chiffre et est équivalent à [0-9].
+	(équivaut à la classe [[:digit:]] de POSIX)
+	c'est à dire l'inverse de \D.
+
+	Ainsi, /\d/ ou /[0-9]/ ou /[^a-zA-Z]/ correspond à '2' dans "H2O est la molécule de l'eau".
+	
+	\D{m,n} : quantificateur borné pour au moins m et au plus n occurrences de ce qui précède.
+
+
+
+Caractere	\D   :   
+	Correspond à un caractère non-chiffre,
+	c'est à dire tout caractère qui n'est pas un chiffre et est équivalent à [^0-9] ou [a-zA-Z].
+	(équivaut à la classe [^[:digit:]] de POSIX)
+	c'est à dire l'inverse de \d.
+
+	Ainsi, /\D/ ou /[^0-9]/ correspond à 'H' dans "H2O est la molécule de l'eau".
+
+
+
+Caractere	\f   :   
+	Correspond à un saut de page (U+000C).
+
+
+
+Caractere	\n   :   
+	Correspond à un saut de ligne (U+000A).
+
+
+
+Caractere	\r   :   
+	Correspond à un retour chariot (U+000D).
+
+
+
+Caractere	\s   :   
+	Correspond à un caractère espace, un blanc, tabulation, saut de ligne ou saut de page. 
+	(équivaut à la classe [[:space:]] de POSIX)
+	C'est équivalent à équivaut à[ \t\n\r\f] ou [ \f\n\r\t\v​\u00a0\u1680​\u180e\u2000​\u2001\u2002​\u2003\u2004​\u2005\u2006​\u2007\u2008​\u2009\u200a​\u2028\u2029​​\u202f\u205f​\u3000].
+	c'est à dire l'inverse de \S
+
+
+	Ainsi, /\s\w*/ correspond à ' toto' in "truc toto".
+
+
+
+Caractere	\S   :   
+	Correspond à un caractère non espace.
+	c'est à dire à un caractère qui n'est pas un blanc. 
+	équivaut à la classe [^[:space:]] de POSIX)
+	C'est équivalent à [^ \f\n\r\t\v​\u00a0\u1680​\u180e\u2000​\u2001\u2002​\u2003\u2004​\u2005\u2006​\u2007\u2008​\u2009\u200a​\u2028\u2029​\u202f\u205f​\u3000].
+	c'est à dire l'inverse de \s
+
+	Ainsi, /\S\w*/ correspond à 'truc' dans "truc toto".
+
+
+
+Caractere	\t   :   
+	Correspond à une tabulation (U+0009).
+
+
+
+Caractere	\v   :   
+	Correspond à une tabulation verticale (U+000B).
+
+
+
+Caractere	\w   :   
+	Correspond un caractère lettre ou chiffre, 
+	c'est à dire à n'importe quel caractère alphanumérique, y compris le tiret bas. C'est équivalent à [0-9a-zA-Z_].
+	(n'équivaut pas à la classe [[:alnum:]] de POSIX)
+	c'est à dire l'inverse de \w
+
+	Ainsi, /\w/ correspond à 'l' dans "licorne", à '5' dans "5,28€", et à '3' dans "3D."
+
+
+
+Caractere	\W   :   
+	Correspond à un caractère ni lettre, ni chiffre,
+	c'est à dire à n'importe quel caractère n'étant pas un caractère de mot. 
+	Cela est équivalent à [^A-Za-z0-9_].
+	(équivaut à la classe [^[:alnum:]] de POSIX)
+	c'est à dire l'inverse de \W
+
+	Ainsi, /\W/ ou /[^A-Za-z0-9_]/ correspond à '%' dans "50%."
+
+
+
+Caractere	\X   :   
+Caractere	\NombreEntier   :   
+	Soit n un entier strictement positif, cela fait référence au groupe de la n-ième expression entre parenthèses (en comptant les parenthèses ouvrantes).
+
+	Ainsi, /pomme(,)\spoire\1/ correspond à 'pomme, poire,' dans "pomme, poire, cerise, pêche".
+
+
+
+Caractere	\cx   :   
+Caractere	\cX   :   
+Caractere	\cCaractere1   :   
+	Étant donné un caractère Caractere1 compris entre A-Z ou a-z.
+	Correspond au caractère de contrôle ASCII indiqué par x. 
+	La valeur de x doit être incluse dans la plage A-Z ou a-z. 
+	Si ce n'est pas le cas, c sera considéré comme un caractère "c" littéral. 
+
+	Ainsi, /\cM/ correspond au caractère de contrôle M (U+000D) d'une chaîne de caractère.
+
+
+
+Caractere	\0   :   
+	Correspond au caractère NULL (U+0000). Il ne doit pas être suivi d'un autre chiffre. 
+	Car \0<chiffres> est une séquence d'échappement pour les nombres en notation octale.
+
+
+
+
+Caractere	\n   :   
+	Identifie une valeur d'échappement octale ou une référence arrière. 
+	Si \n est précédé d'au moins n sous-expressions capturées, n est une référence arrière. 
+	Sinon, n est une valeur d'échappement octale si n est un chiffre octal (0-7). 
+
+
+
+
+Caractere	\xhh   :   
+Caractere	\xNombreHexadécimal   :   
+	Correspond au caractère dont le code hexadécimal est hh 
+	(deux chiffres hexadécimaux).
+
+
+
+Caractere	\uhhhh   :   
+Caractere	\uNombreHexadécimal   :   
+	Correspond au caractère dont le code est hhhh 
+	(quatre chiffres hexadécimaux).
+
+
+
+/* ******************************************************************* */
+/* ******************************************************************* */
+/* ******************************************************************* */
+
+
+
+[:cntrl:] 	Caractère de contrôle 	[\x00-\x1F\x7F]
+[:space:] 	Espace blanc ou séparateur de ligne ou de paragraphe 	[ \t\r\n\v\f]
+[:blank:] 	Espace blanc ou tabulation non séparateur de ligne ou de paragraphe 	[ \t]
+[:print:] 	Espace simple ou caractère graphique visible (voir ci-dessous la différence avec Perl). 	[\x20-\x7E]
+[:graph:] 	Caractère graphique visible 	[\x21-\x7E]
+[:punct:] 	Caractère de ponctuation 	[!"#$%&'()*+,-.\/:;?@[\\\]_`{|}~]
+[:alnum:] 	Caractère alphanumérique 	[0-9a-zA-Z]
+[:digit:] 	Chiffre décimal 	[0-9]
+[:xdigit:] 	Chiffre hexadécimal 	[0-9a-fA-F]
+[:alpha:] 	Caractère alphabétique 	[a-zA-Z]
+[:lower:] 	Lettre minuscule 	[a-z]
+[:upper:] 	Lettre capitale 	[A-Z]
+
+
+
+/* ******************************************************************* */
+/* ******************************************************************* */
+/* ******************************************************************* */
+
+
+
+Modificateurs
+
+Les modificateurs are Utilise versez éffectuer des recherches insensibles à la casse et Mondiaux:
+Modifier description : 
+
+	i  :  Exécutez insensible à la casse
+	g  :  Effectuer un match mondiale (trouver tous les matchs plutôt que d'arrêter après le premier match)
+	m  :  Effectuez multiligne correspondant
+
+
+
+/* ******************************************************************* */
+/* ******************************************************************* */
+/* ******************************************************************* */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Exemple 0 : 
+
+		Le motif /a*/ utilise le caractère spécial '*' pour correspondre à 0 ou plusieurs 'a'. 
+		
+		Le motif /a\*/, au contraire, rend '*' non-spécial pour correspondre aux chaînes de caractères qui comportent la lettre a et une astérisque, exemple : "a*"
+
+		Ainsi, /^A/ ne correspond pas au 'A' de la chaine "un A", mais correspond au 'A' de "Arceau".
+		
+		Ainsi, /t$/ ne correspond pas au 't' de "printemps", mais correspond au 't' de "aliment".
+		
+		Ainsi, /bo*/ correspond à 'boo' dans "Un booléen" et à 'b' dans "Un bateau bleu", mais ne correspond à rien dans "Ce matin".
+		
+		Ainsi, /a+/ correspond au 'a' dans "maison" et à tous les 'a' dans "maaaaaaison".
+		
+		Ainsi, /e?le?/ correspond au 'el' dans "gel" et au 'le' dans "angle" mais aussi au 'l' dans "Oslo".
+
+		
+		Ainsi, /.n/ correspond à  'un' et 'en' dans "Un baobab nain en cours de  croissance" mais pas à 'nain'.
+				
+		Ainsi, les '(toto)' et '(truc)', dans le motif /(toto) (truc) \1 \2/ correspondent 
+		et gardent en mémoire les deux premiers mots de la chaîne de caractère "toto truc toto truc". 
+		Alors \1 correspondent au premier mot de la chaîne avec des parenthese ().
+		Alors \2 correspondent au deuxieme mot de la chaîne avec des parenthese ().
+
+		Ainsi, l'expression /(?:zoo){1,2}/ sans parenthèes non-capturantes les caractères {1,2} ne s'appliqueraient 
+		qu'au dernier 'o' de 'zoo'. Avec les parenthèses capturantes, {1,2} s'applique au mot entier 'zoo'.
+
+		Ainsi, /Jack(?=Sparrow)/ correspond à 'Jack' seulement s'il est suivi de 'Sparrow'. /Jack(?=Sparrow|Bauer)/ 
+		correspond à 'Jack' seulement s'il est suivi de 'Sparrow' ou de 'Bauer'. 
+		Cependant, ni 'Sparrow' ni 'Bauer' ne feront partie de la correspondance.
+		
+		Ainsi, /\d+(?!\.)/ correspond à un nombre qui n'est pas suivi par un point, 
+		cette expression utilisée avec la chaîne 3.141 correspondra pour '141' mais pas pour '3.141'.
+		
+		Ainsi, /vert|rouge/ correspond à 'vert' dans "feu vert" et à 'rouge' dans "feu rouge".
+		
+		Ainsi, /a{2}/ ne correspond pas au 'a' de "Mozilla" mais correspond à tous les 'a' de "Mozilaa" 
+		et aux deux premiers 'a' de "Mozillaaa".
+		
+		Ainsi, /a{1,3}/ ne correspond à rien dans "Mozill", au 'a' de "Mozilla", au deux premiers 'a' de "Mozilla" 
+		et au trois premiers 'a' de "Mozillaaaaa". 
+		Pour ce dernier exemple, on doit noter que le correspondance ne se fait que sur "aaa" 
+		bien qu'il y ait plus de 'a' dans la chaîne de caractères.
+		
+		Le motif [a-d],  aura les mêmes correspondances que [abcd], correspondant au 'b' de "bulle" 
+		et au 'c' de "ciel". Les motifis /[a-z.]+/ et /[\w.]+/ correspondront pour la chaîne entirère : "Adre.ss.e".
+		
+		[^abc] est équivalent à [^a-c]. Ils correspondent à 'u' dans "bulle" et à 'i' dans "ciel".
+		
+		
+		
+		/\bm/ correspond au 'm' dans "mignon" ;
+		
+		/no\b/ ne correspond pas au  'no' de "mignon" car 'no' est suivi de 'n' qui est un caractère de limite de mot;
+		
+		/non\b/ correspond au 'non' de "mignon" car 'non' représente la fin de la chaîne de caractère 
+		et n'est donc pas suivi par un caractère de mot.
+		
+		/\w\b\w/ ne correspondra jamais à quoi que ce soit car un caractère de mot ne peut pas être 
+		suivi à la fois par un caractère de mot et un caractère n'étant pas un caractère de mot.
+		
+		
+		
+		Ainsi, /\B../ correspond au 'oo' de "football" (et /e\B./ correspond au 'me' dans "une mer "
+		
+		Ainsi, /\cM/ correspond au caractère de contrôle M (U+000D) d'une chaîne de caractère.
+		
+		Ainsi, /\d/ ou /[0-9]/ correspond à '2' dans "H2O est la molécule de l'eau".
+		
+		Ainsi, /\D/ ou /[^0-9]/ correspond à 'H' dans "H2O est la molécule de l'eau".
+		
+		Ainsi, /\s\w*/ correspond à ' toto' in "truc toto".
+		
+		Ainsi, /\S\w*/ correspond à 'truc' dans "truc toto".
+		
+		Ainsi, /\w/ correspond à 'l' dans "licorne", à '5' dans "5,28€", et à '3' dans "3D."
+		
+		Ainsi, /\W/ ou /[^A-Za-z0-9_]/ correspond à '%' dans "50%."
+		
+		Ainsi, /pomme(,)\spoire\1/ correspond à 'pomme, poire,' dans "pomme, poire, cerise, pêche".
+		
+
+
+
+
+
+
+
+
+
+
+Exemple 1 : 
+
+		(aa)? : La variable contient une fois au maximum la chaine « aa »
+		(aa)+ : La variable contient une fois au minimum la chaine « aa »
+		(aa)* : La variable contient zéro ou plusieurs fois la chaine « aa »
+		(aa){2} : La variable contient 2 chaine « aa » qui se suivent
+		(aa){2,5} : La variable contient entre 2 et 5 fois la chaine « aa » qui se suivent
+		
+		[a-z ] : Toutes les lettres minuscules
+		[ A-Z ] : Toutes les lettres majuscules
+		[ 0-9] : Tous les chiffres de 0 à 9
+		[ 1-7] : Tous les chiffres de 1 à 7
+		[ t-w] : Toutes les lettres minuscules comprises entre t et w
+
+
+
+
+
+
+
+
+
+Exemple 2 : 
+
+Exemples :
+
+	ba? correspond à "b" ou "ba".
+	^a trouve "a" en début de ligne mais pas dans "ba".
+	a[^bcd]e correspond à "afe" mais pas à "ace".
+	a$ trouve "a" en fin de ligne mais pas dans "ab".
+	ba+c trouve "bac", ou "baac", "baaac", etc. mais pas "bc"" ni "boc".
+	peu|prou|nombres? trouve "peu", "prou", "nombre" ou "nombres".
+
+	[hc]+at correspond à hat, cat, hhat, chat, hcat, ccchat, etc., mais pas à at.
+	[hc]?at correspond à hat, cat et at.
+	ch(at|ien) correspond à chat ou chien (de plus les parenthèses délimitent un groupement de capture de la valeur effective de chaque alternative 
+	et permet d’utiliser cette capture pour les opérations de remplacement automatique après une recherche de correspondance utilisant les expressions rationnelles).
+	
+	ba? correspond à "b" ou "ba"
+	ba+ correspond à "ba", "baa", "baaa", etc.
+	abc|def correspond à "abc" ou "def".
+
+
+
+
+
+
+
+
+Exemple 3 : 
+
+Vérifier une adresse eMail : 
+
+^[a-zA-Z0-9]+([\._-]*[a-zA-Z0-9]+)*@[a-zA-Z0-9]+([\._-]*[a-zA-Z0-9]+)*\.[a-zA-Z]{2,12}$
+
+
+
+
+
+
+
+Exemple 4 : 
+
+Vérifier un code postal
+
+^[0-9]{2,5}$
+
+
+
+
+
+
+
+Exemple 5 : 
+
+Vérifier un numéro de téléphone
+
+^(\d\d\s){4}(\d\d)$
+
+
+
+
+
+
+
+Exemple 6 : 
+
+Vérifier une date
+
+^([0-3][0-9]})(/)([0-9]{2,2})(/)([0-3]{2,2})$
+
+
+
+
+
+
+
+Exemple 7 : 
+
+Vérifier l’url d’un site web
+
+^(http|https|ftp):\/\/([\w]*)\.([\w]*)\.(com|net|org|biz|info|mobi|us|cc|bz|tv|ws|name|co|me)(\.[a-z]{1,3})?\z/i
+
+
+
+
+
+
+Exemple 8 : 
+
+Vérifier Le pseudo ou le Login
+
+^[a-zA-Z0-9_]{3,16}$
+
+
+
+
+
+
+
+Exemple 9 : 
+
+Vérifier une adresse IP
+
+^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:[.](?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$
+
+
+
+
+
+
+
+Exemple 10 : 
+
+Vérifier le code hexadécimale d’un code d’une couleur
+
+^#(?:(?:[a-f\d]{3}){1,2})$/i
+
+ */
+ 
+/* ******************************************************************* */
+/* ******************************************************************* */
+/* ******************************************************************* */
+
+
+/* ******************************************************************************************************************** */
+/* ******************************************************************************************************************** */
+				
+/* *****************************************Fin de expressions réguliere ********************************************** */
+
+/* ******************************************************************************************************************** */
+/* ******************************************************************************************************************** */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
